@@ -1,6 +1,30 @@
-.text {
-  color: red;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffce95;
+  color: #333;
+  text-align: center;
 }
+
+header {
+  background-color: #ffc65d;
+  color: #fff;
+  padding: 80px 20px;
+  position: relative;
+  height: 100vh;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
 .click {
   background-color: blue;
   color: white;
@@ -8,14 +32,48 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .click:hover {
   background-color: red;
-  transform: scale(05);
+  transform: translate(-50%, -50%) scale(2);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+main {
+  padding: 60px 20px;
+}
+
+main h2 {
+  font-size: 2rem;
+  color: #d2691e;
+  margin-bottom: 40px;
+}
+
+article {
+  margin-bottom: 30px;
+}
+
+article h3 {
+  font-size: 1.5rem;
+  color: #b35412;
+  margin-bottom: 10px;
+}
+
+article p {
+  font-size: 1rem;
+}
+
+footer {
+  background-color: #d2691e;
+  color: #fff;
+  padding: 20px;
 }
