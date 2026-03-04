@@ -13,20 +13,28 @@
     </header>
 
     <main>
-      <form>
+      <form id="signupForm">
         <label>Full Name</label>
-        <input type="text" placeholder="Enter your full name" />
+        <input type="text" id="signupName" placeholder="Enter your full name" />
 
         <label>Email</label>
-        <input type="email" placeholder="Enter your email" />
+        <input type="email" id="signupEmail" placeholder="Enter your email" />
 
         <label>Password</label>
-        <input type="password" placeholder="Create a password" />
+        <input
+          type="password"
+          id="signupPassword"
+          placeholder="Create a password"
+        />
 
         <label>Confirm Password</label>
-        <input type="password" placeholder="Confirm your password" />
+        <input
+          type="password"
+          id="signupConfirmPassword"
+          placeholder="Confirm your password"
+        />
 
-        <button type="button">Create Account</button>
+        <button type="submit">Create Account</button>
       </form>
 
       <p>
@@ -42,5 +50,6 @@
     <footer>
       <p>&copy; 2026 Rey Cafe</p>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>
