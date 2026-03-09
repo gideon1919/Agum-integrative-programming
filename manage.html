@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Manage Users | Rey Cafe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav class="nav-buttons" style="left: 35px; right: auto">
+        <a href="admin.html">Dashboard</a>
+        <a href="logout.html">Logout</a>
+      </nav>
+
+      <div class="header-content">
+        <h1>Manage Users</h1>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <table class="admin-table" id="userTable">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+
+          <tr>
+            <td>1</td>
+            <td>Ana</td>
+            <td>ana@email.com</td>
+            <td>
+              <button class="delete-btn" onclick="deleteRow(this)">
+                Delete
+              </button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Juan</td>
+            <td>juan@email.com</td>
+            <td>
+              <button class="delete-btn" onclick="deleteRow(this)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </table>
+      </article>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Rey Cafe | Admin Panel</p>
+    </footer>
+
+    <script>
+      function deleteRow(btn) {
+        let row = btn.parentNode.parentNode;
+        row.remove();
+      }
+    </script>
+  </body>
+</html>

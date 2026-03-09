@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add User | Rey Cafe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav class="nav-buttons" style="left: 35px; right: auto">
+        <a href="admin.html">Dashboard</a>
+        <a href="manage-users.html">Manage Users</a>
+        <a href="logout.html">Logout</a>
+      </nav>
+
+      <div class="header-content">
+        <h1>Add New User</h1>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <form id="addUserForm">
+          <label>Name</label>
+          <input type="text" id="addName" placeholder="Enter name" required />
+
+          <label>Email</label>
+          <input
+            type="email"
+            id="addEmail"
+            placeholder="Enter email"
+            required
+          />
+
+          <label>Role</label>
+          <input
+            type="text"
+            id="addRole"
+            placeholder="Enter role (admin/user)"
+            required
+          />
+
+          <button type="submit">Add User</button>
+        </form>
+      </article>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Rey Cafe | Admin Panel</p>
+    </footer>
+
+    <script>
+      const addUserForm = document.getElementById("addUserForm");
+      addUserForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("addName").value;
+        const email = document.getElementById("addEmail").value;
+        const role = document.getElementById("addRole").value;
+        alert(`User Added!\nName: ${name}\nEmail: ${email}\nRole: ${role}`);
+        addUserForm.reset();
+      });
+    </script>
+  </body>
+</html>

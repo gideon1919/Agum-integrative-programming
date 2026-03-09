@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard | Rey Cafe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <script>
+      const role = localStorage.getItem("userRole");
+      if (role !== "admin") {
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <header>
+      <nav class="nav-buttons" style="left: 35px; right: auto">
+        <a href="manage-users.html">Manage Users</a>
+        <a href="add-user.html">Add User</a>
+        <a href="logout.html">Logout</a>
+      </nav>
+
+      <div class="header-content">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome Admin! Use the menu to manage the system.</p>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <h2>Dashboard Overview</h2>
+        <p>You can manage users, view data, and perform admin tasks here.</p>
+      </article>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Rey Cafe | Admin Panel</p>
+    </footer>
+  </body>
+</html>
