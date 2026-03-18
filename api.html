@@ -4,7 +4,7 @@ api.html
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Country Finder</title>
+    <title>Rey Cafe Menu</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -12,93 +12,97 @@ api.html
     <header>
       <div class="nav-buttons">
         <a href="index.html">Home</a>
-        <a href="saved.html">Saved</a>
+        <a href="saved.html">Favorites</a>
       </div>
 
-      <h1>Country Finder</h1>
-      <p>Search and save country information</p>
+      <h1>Rey Cafe Menu</h1>
+      <p>Search and save your favorite drinks, pastries, and snacks</p>
     </header>
 
     <main>
-      <h2>Search Country</h2>
+      <h2>Search Our Cafe Menu</h2>
 
       <form
         onsubmit="
           event.preventDefault();
-          searchCountry();
+          searchMeal();
         "
       >
-        <label>Enter Country Name</label>
-        <input type="text" id="countryInput" placeholder="e.g. Japan" />
+        <label>Enter Drink or Food Name</label>
+        <input
+          type="text"
+          id="mealInput"
+          placeholder="e.g. Coffee, Cake, Sandwich"
+        />
         <button type="submit">Search</button>
       </form>
 
-      <div id="result"></div>
+      <div id="mealResult"></div>
     </main>
 
     <footer>
-      <p>API Integration Activity</p>
+      <p>&copy; 2026 Rey Cafe</p>
     </footer>
 
     <script>
-      let currentCountry = null;
+      function searchMeal() {
+        const input = document.getElementById("mealInput").value.trim();
+        const result = document.getElementById("mealResult");
 
-      function searchCountry() {
-        const country = document.getElementById("countryInput").value;
-        const result = document.getElementById("result");
-
-        if (!country) {
-          result.innerHTML = "<p>Please enter a country name.</p>";
+        if (!input) {
+          result.innerHTML = "<p>Please enter a food or drink.</p>";
           return;
         }
 
-        result.innerHTML = "<p>Loading...</p>";
+        result.innerHTML = "<p>Loading menu...</p>";
 
-        fetch(`https://restcountries.com/v3.1/name/${country}`)
-          .then((res) => {
-            if (!res.ok) throw new Error("Country not found");
-            return res.json();
-          })
+        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
+          .then((res) => res.json())
           .then((data) => {
-            const c = data[0];
+            if (!data.meals) {
+              result.innerHTML = "<p>No items found.</p>";
+              return;
+            }
 
-            currentCountry = {
-              name: c.name.common,
-              capital: c.capital ? c.capital[0] : "N/A",
-              population: c.population,
-              region: c.region,
-              flag: c.flags.png,
-            };
+            result.innerHTML = "";
 
-            result.innerHTML = `
-        <div class="profile-card">
-          <img src="${currentCountry.flag}">
-          <h2>${currentCountry.name}</h2>
-          <p><strong>Capital:</strong> ${currentCountry.capital}</p>
-          <p><strong>Population:</strong> ${currentCountry.population.toLocaleString()}</p>
-          <p><strong>Region:</strong> ${currentCountry.region}</p>
-          <div class="profile-actions">
-            <button onclick="saveCountry()">Save</button>
-          </div>
-        </div>
-      `;
+            data.meals.forEach((meal) => {
+              const mealData = {
+                name: meal.strMeal,
+                category: meal.strCategory,
+                image: meal.strMealThumb,
+              };
+
+              const mealCard = document.createElement("div");
+              mealCard.classList.add("profile-card");
+              mealCard.innerHTML = `
+                <img src="${mealData.image}">
+                <h2>${mealData.name}</h2>
+                <p><strong>Category:</strong> ${mealData.category}</p>
+                <div class="profile-actions">
+                  <button onclick='saveMeal("${mealData.name}", "${mealData.category}", "${mealData.image}")'>Save</button>
+                </div>
+              `;
+
+              result.appendChild(mealCard);
+            });
           })
-          .catch((err) => {
-            result.innerHTML = "<p>Error: " + err.message + "</p>";
+          .catch(() => {
+            result.innerHTML = "<p>Error loading menu.</p>";
           });
       }
 
-      function saveCountry() {
-        let saved = JSON.parse(localStorage.getItem("countries")) || [];
+      function saveMeal(name, category, image) {
+        const currentMeal = { name, category, image };
+        let saved = JSON.parse(localStorage.getItem("meals")) || [];
 
-        if (saved.some((c) => c.name === currentCountry.name)) {
+        if (saved.some((m) => m.name === currentMeal.name)) {
           alert("Already saved");
           return;
         }
 
-        saved.push(currentCountry);
-        localStorage.setItem("countries", JSON.stringify(saved));
-
+        saved.push(currentMeal);
+        localStorage.setItem("meals", JSON.stringify(saved));
         alert("Saved successfully");
       }
     </script>
