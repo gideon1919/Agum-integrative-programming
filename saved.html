@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saved Favorites</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="nav-buttons">
+        <a href="index.html">Home</a>
+      </div>
+
+      <h1>Saved Favorites</h1>
+      <p>Your saved cafe menu items</p>
+    </header>
+
+    <main>
+      <h2>Saved Menu</h2>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="savedMeals"></tbody>
+      </table>
+    </main>
+
+    <footer>
+      <p>Rey Cafe</p>
+    </footer>
+
+    <script>
+      function loadMeals() {
+        const table = document.getElementById("savedMeals");
+        let meals = JSON.parse(localStorage.getItem("meals")) || [];
+
+        if (meals.length === 0) {
+          table.innerHTML = `<tr><td colspan="4">No saved items yet.</td></tr>`;
+          return;
+        }
+
+        table.innerHTML = "";
+
+        meals.forEach((m, index) => {
+          table.innerHTML += `
+          <tr>
+            <td><img src="${m.image}" width="60"></td>
+            <td>${m.name}</td>
+            <td>${m.category}</td>
+            <td>
+              <button class="delete-btn" onclick="deleteMeal(${index})">
+                Delete
+              </button>
+            </td>
+          </tr>
+        `;
+        });
+      }
+
+      function deleteMeal(index) {
+        let meals = JSON.parse(localStorage.getItem("meals")) || [];
+        meals.splice(index, 1);
+        localStorage.setItem("meals", JSON.stringify(meals));
+        loadMeals();
+      }
+
+      loadMeals();
+    </script>
+  </body>
+</html>

@@ -3,6 +3,7 @@ const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", function (e) {
     e.preventDefault();
+
     const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value.trim();
 
@@ -82,4 +83,63 @@ if (nav && role === "admin") {
   adminLink.href = "admin.html";
   adminLink.textContent = "Admin Dashboard";
   nav.appendChild(adminLink);
+}
+
+let currentMeal = null;
+
+function searchMeal() {
+  const input = document.getElementById("mealInput").value;
+  const result = document.getElementById("mealResult");
+
+  if (!input) {
+    result.innerHTML = "<p>Please enter a food or drink.</p>";
+    return;
+  }
+
+  result.innerHTML = "<p>Loading menu...</p>";
+
+  fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.meals) {
+        result.innerHTML = "<p>No items found.</p>";
+        return;
+      }
+
+      const meal = data.meals[0];
+
+      currentMeal = {
+        name: meal.strMeal,
+        category: meal.strCategory,
+        image: meal.strMealThumb,
+      };
+
+      result.innerHTML = `
+        <div class="profile-card">
+          <img src="${currentMeal.image}">
+          <h2>${currentMeal.name}</h2>
+          <p><strong>Category:</strong> ${currentMeal.category}</p>
+          <div class="profile-actions">
+            <button onclick="saveMeal()">Save</button>
+          </div>
+        </div>
+      `;
+    })
+    .catch(() => {
+      result.innerHTML = "<p>Error loading menu.</p>";
+    });
+}
+
+function saveMeal() {
+  let saved = JSON.parse(localStorage.getItem("meals")) || [];
+
+  if (saved.some((m) => m.name === currentMeal.name)) {
+    alert("Already saved");
+    return;
+  }
+
+  saved.push(currentMeal);
+  localStorage.setItem("meals", JSON.stringify(saved));
+
+  alert("Saved to favorites");
 }
